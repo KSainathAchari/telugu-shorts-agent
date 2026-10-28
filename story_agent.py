@@ -6,7 +6,7 @@ from google import genai
 api_key = os.environ.get("GEMINI_API_KEY")
 
 if not api_key:
-raise RuntimeError("GEMINI_API_KEY is missing.")
+     raise RuntimeError("GEMINI_API_KEY is missing.")
 
 client = genai.Client(api_key=api_key)
 
