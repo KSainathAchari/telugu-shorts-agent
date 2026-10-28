@@ -17,8 +17,7 @@ client = genai.Client(api_key=api_key)
 Story generation prompt
 
 prompt = """
-Create an original 45-60 second Telugu cartoon story.
-
+Create an original 45-60 second Telugu cartoon moral story.
 Include:
 
 1. An exciting opening
@@ -28,11 +27,8 @@ Include:
 5. A positive ending and moral
 6. A YouTube description and hashtags
 
-Return the title, characters, scenes, Telugu narration,
-moral, and YouTube description in Telugu.
+Return the story in Telugu.
 """
-
-Generate the story with retries
 
 for attempt in range(3):
 try:
@@ -43,20 +39,18 @@ print(f"Generating story: attempt {attempt + 1}/3")
         contents=prompt
     )
 
-    if not response.text:
-        raise RuntimeError("Gemini returned an empty response.")
-
     story = response.text
 
-    # Create the stories folder
+    if not story:
+        raise RuntimeError("Gemini returned an empty response.")
+
+    # Save the story
     output_dir = Path("stories")
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # Save the generated story
     output_file = output_dir / "latest-story.md"
     output_file.write_text(story, encoding="utf-8")
 
-    # Display the result
     print("\n--- TELUGU STORY ---\n")
     print(story)
     print(f"\nStory saved to: {output_file}")
