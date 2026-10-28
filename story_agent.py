@@ -3,7 +3,6 @@ import time
 from pathlib import Path
 from google import genai
 
-Read the API key from GitHub Secrets
 
 api_key = os.environ.get("GEMINI_API_KEY")
 
