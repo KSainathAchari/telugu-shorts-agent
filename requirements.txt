@@ -1,3 +1,4 @@
 google-genai
 gTTS
 moviepy
+Pillow
