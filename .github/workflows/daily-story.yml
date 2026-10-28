@@ -11,10 +11,9 @@ contents: write
 jobs:
 generate-story:
 runs-on: ubuntu-latest
-
 steps:
-  - name: Get repository code
-    uses: actions/checkout@v4
+- name: Get repository code
+uses: actions/checkout@v4
 
   - name: Set up Python
     uses: actions/setup-python@v5
