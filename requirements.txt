@@ -3,3 +3,5 @@ gTTS
 moviepy
 Pillow
 numpy
+google-auth
+google-api-python-client
