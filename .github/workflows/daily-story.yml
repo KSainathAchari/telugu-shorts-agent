@@ -1,5 +1,8 @@
+
 name: Daily Telugu Story Agent
-on: workflow_dispatch
+
+on:
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -11,18 +14,24 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: true
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install -r requirements.txt
-      - name: Generate Telugu story
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate Telugu story and voice
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python story_agent.py
-      - name: Save story to GitHub
+
+      - name: Save story and voice to GitHub
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add stories/latest-story.md
-          git diff --cached --quiet || git commit -m "Save generated Telugu story"
+          git add stories/latest-story.md stories/latest-voice.mp3
+          git diff --cached --quiet || git commit -m "Save generated Telugu story and voice"
           git push
+          
