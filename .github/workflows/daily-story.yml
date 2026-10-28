@@ -10,12 +10,15 @@ permissions:
 jobs:
   generate-story:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           persist-credentials: true
 
-      - uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
@@ -27,11 +30,14 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python story_agent.py
 
-      - name: Save story and voice to GitHub
+      - name: Create YouTube Short
+        run: python make_video.py
+
+      - name: Save story, voice, and video
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add stories/latest-story.md stories/latest-voice.mp3
-          git diff --cached --quiet || git commit -m "Save generated Telugu story and voice"
+          git add stories/latest-story.md stories/latest-voice.mp3 stories/latest-short.mp4
+          git diff --cached --quiet || git commit -m "Save generated Telugu story, voice, and video"
           git push
           
